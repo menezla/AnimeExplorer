@@ -98,7 +98,7 @@ private fun AnimeCardImage(anime: AnimeEntity) {
                 model = if (AppConstants.SHOW_ANIME_IMAGES) (anime.imageUrl ?: anime.largeImageUrl) else null,
                 contentDescription = anime.title,
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
+                contentScale = if (anime.imageUrl != null || anime.largeImageUrl != null) ContentScale.Crop else ContentScale.Fit,
                 error = painterResource(id = R.drawable.ic_anime_placeholder),
                 placeholder = painterResource(id = R.drawable.ic_anime_placeholder)
             )

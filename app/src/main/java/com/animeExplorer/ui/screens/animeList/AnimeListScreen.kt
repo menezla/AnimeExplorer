@@ -113,11 +113,11 @@ fun AnimeListScreen(
                         modifier = Modifier.align(Alignment.Center),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(48.dp),
-                                color = MaterialTheme.colorScheme.primary,
-                                strokeWidth = 4.dp
-                            )
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(48.dp),
+                            color = MaterialTheme.colorScheme.primary,
+                            strokeWidth = 4.dp
+                        )
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = AppConstants.LOADING_ANIME_MESSAGE,
@@ -144,6 +144,7 @@ fun AnimeListScreen(
                         }
                     }
                 }
+
                 AnimeListUiState.SUCCESS -> {
                     FadeInAnimation(visible = true) {
                         AnimeList(

@@ -9,15 +9,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavHostController
-import com.animeExplorer.util.AppConstants
 import com.animeExplorer.ui.actions.animeDetails.AnimeDetailsAction
 import com.animeExplorer.ui.actions.animeDetails.AnimeDetailsEvent
 import com.animeExplorer.ui.actions.animeDetails.AnimeDetailsUiState
@@ -30,6 +29,7 @@ import com.animeExplorer.ui.screens.splash.SplashScreen
 import com.animeExplorer.ui.theme.AnimeExplorerTheme
 import com.animeExplorer.ui.viewmodel.AnimeDetailsViewModel
 import com.animeExplorer.ui.viewmodel.AnimeListViewModel
+import com.animeExplorer.util.AppConstants
 import org.koin.androidx.compose.koinViewModel
 
 /**
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
  */
 @Composable
 private fun AnimeNavigation(navController: NavHostController) {
-    var showSplash by remember { mutableStateOf(true) }
+    var showSplash by rememberSaveable { mutableStateOf(true) }
     
     if (showSplash) {
         SplashScreen(

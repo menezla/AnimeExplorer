@@ -128,19 +128,22 @@ fun AnimeListScreen(
                 }
 
                 AnimeListUiState.ERROR -> {
-                    BounceAnimation(visible = true) {
-                        Card(
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .padding(24.dp),
-                            shape = RoundedCornerShape(16.dp),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-                        ) {
-                            ErrorContent(
-                                error = error ?: AppConstants.ERROR_TEXT,
-                                onRetry = { onAction(AnimeListAction.RetryLoadAnimeList) },
-                                modifier = Modifier.padding(24.dp)
-                            )
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        BounceAnimation(visible = true) {
+                            Card(
+                                modifier = Modifier.padding(24.dp),
+                                shape = RoundedCornerShape(16.dp),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                            ) {
+                                ErrorContent(
+                                    error = error ?: AppConstants.ERROR_TEXT,
+                                    onRetry = { onAction(AnimeListAction.RetryLoadAnimeList) },
+                                    modifier = Modifier.padding(24.dp)
+                                )
+                            }
                         }
                     }
                 }

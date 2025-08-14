@@ -8,6 +8,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
@@ -23,6 +26,7 @@ import com.animeExplorer.ui.actions.animeList.AnimeListEvent
 import com.animeExplorer.ui.actions.animeList.AnimeListUiState
 import com.animeExplorer.ui.screens.animeDetails.AnimeDetailsScreen
 import com.animeExplorer.ui.screens.animeList.AnimeListScreen
+import com.animeExplorer.ui.screens.splash.SplashScreen
 import com.animeExplorer.ui.theme.AnimeExplorerTheme
 import com.animeExplorer.ui.viewmodel.AnimeDetailsViewModel
 import com.animeExplorer.ui.viewmodel.AnimeListViewModel
@@ -57,17 +61,27 @@ class MainActivity : ComponentActivity() {
  */
 @Composable
 private fun AnimeNavigation(navController: NavHostController) {
-    NavHost(
-        navController = navController,
-        startDestination = AppConstants.ANIME_LIST_ROUTE
-    ) {
-        composable(AppConstants.ANIME_LIST_ROUTE) {
-            AnimeListRoute(navController)
-        }
-        
-        composable("${AppConstants.ANIME_DETAILS_ROUTE}/{${AppConstants.ANIME_ID_PARAM}}") { backStackEntry ->
-            val animeId = backStackEntry.arguments?.getString(AppConstants.ANIME_ID_PARAM)?.toIntOrNull() ?: 0
-            AnimeDetailsRoute(animeId, navController)
+    var showSplash by remember { mutableStateOf(true) }
+    
+    if (showSplash) {
+        SplashScreen(
+            onSplashComplete = {
+                showSplash = false
+            }
+        )
+    } else {
+        NavHost(
+            navController = navController,
+            startDestination = AppConstants.ANIME_LIST_ROUTE
+        ) {
+            composable(AppConstants.ANIME_LIST_ROUTE) {
+                AnimeListRoute(navController)
+            }
+            
+            composable("${AppConstants.ANIME_DETAILS_ROUTE}/{${AppConstants.ANIME_ID_PARAM}}") { backStackEntry ->
+                val animeId = backStackEntry.arguments?.getString(AppConstants.ANIME_ID_PARAM)?.toIntOrNull() ?: 0
+                AnimeDetailsRoute(animeId, navController)
+            }
         }
     }
 }
@@ -83,7 +97,7 @@ private fun AnimeListRoute(navController: NavHostController) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     
     val uiState = when {
-        state.isLoading -> AnimeListUiState.LOADING
+        state.isLoading || state.isRefreshing -> AnimeListUiState.LOADING
         state.error != null -> AnimeListUiState.ERROR
         else -> AnimeListUiState.SUCCESS
     }
@@ -120,7 +134,7 @@ private fun AnimeDetailsRoute(animeId: Int, navController: NavHostController) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     
     val uiState = when {
-        state.isLoading -> AnimeDetailsUiState.LOADING
+        state.isLoading || state.isRefreshing -> AnimeDetailsUiState.LOADING
         state.error != null -> AnimeDetailsUiState.ERROR
         else -> AnimeDetailsUiState.SUCCESS
     }

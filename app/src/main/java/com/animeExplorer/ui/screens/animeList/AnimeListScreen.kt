@@ -38,14 +38,13 @@ import com.animeExplorer.ui.actions.animeList.AnimeListEvent
 import com.animeExplorer.ui.actions.animeList.AnimeListUiState
 import com.animeExplorer.ui.animations.BounceAnimation
 import com.animeExplorer.ui.animations.FadeInAnimation
-import com.animeExplorer.ui.animations.PulseAnimation
 import com.animeExplorer.ui.components.ErrorContent
 import com.animeExplorer.ui.screens.animeList.components.AnimeList
 import com.animeExplorer.util.AppConstants
 
 /**
  * Main screen for displaying the list of anime with modern UI design and animations.
- * 
+ *
  * @param uiState Current UI state of the screen (LOADING, SUCCESS, ERROR)
  * @param animeList List of anime entities to display when in SUCCESS state
  * @param error Error message to display when in ERROR state
@@ -65,7 +64,6 @@ fun AnimeListScreen(
     LaunchedEffect(Unit) {
         onAction(AnimeListAction.LoadAnimeList())
     }
-    
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -111,27 +109,24 @@ fun AnimeListScreen(
         ) {
             when (uiState) {
                 AnimeListUiState.LOADING -> {
-                    FadeInAnimation(visible = true) {
-                        Column(
-                            modifier = Modifier.align(Alignment.Center),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            PulseAnimation {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(48.dp),
-                                    color = MaterialTheme.colorScheme.primary,
-                                    strokeWidth = 4.dp
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                text = AppConstants.LOADING_ANIME_MESSAGE,
-                                fontSize = 16.sp,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                    Column(
+                        modifier = Modifier.align(Alignment.Center),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(48.dp),
+                                color = MaterialTheme.colorScheme.primary,
+                                strokeWidth = 4.dp
                             )
-                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = AppConstants.LOADING_ANIME_MESSAGE,
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
+
                 AnimeListUiState.ERROR -> {
                     BounceAnimation(visible = true) {
                         Card(
@@ -166,7 +161,7 @@ fun AnimeListScreen(
 
 /**
  * Preview for AnimeListScreen in loading state.
- * 
+ *
  * @author udit
  */
 @Preview(showBackground = true)
@@ -185,7 +180,7 @@ fun AnimeListScreenLoadingPreview() {
 
 /**
  * Preview for AnimeListScreen in success state.
- * 
+ *
  * @author udit
  */
 @Preview(showBackground = true)
@@ -212,7 +207,7 @@ fun AnimeListScreenSuccessPreview() {
                 youtubeId = "def456"
             )
         )
-        
+
         AnimeListScreen(
             uiState = AnimeListUiState.SUCCESS,
             animeList = sampleAnimeList,
@@ -225,7 +220,7 @@ fun AnimeListScreenSuccessPreview() {
 
 /**
  * Preview for AnimeListScreen in error state.
- * 
+ *
  * @author udit
  */
 @Preview(showBackground = true)

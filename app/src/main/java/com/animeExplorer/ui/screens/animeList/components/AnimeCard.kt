@@ -22,8 +22,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
 import com.animeExplorer.data.local.AnimeEntity
+import com.animeExplorer.R
 import com.animeExplorer.ui.animations.FadeInAnimation
 import com.animeExplorer.ui.animations.ScaleAnimation
 import com.animeExplorer.ui.animations.SlideInAnimation
@@ -93,10 +95,12 @@ private fun AnimeCardImage(anime: AnimeEntity) {
                 .fillMaxHeight()
         ) {
             AsyncImage(
-                model = anime.imageUrl ?: anime.largeImageUrl,
+                model = if (AppConstants.SHOW_ANIME_IMAGES) (anime.imageUrl ?: anime.largeImageUrl) else null,
                 contentDescription = anime.title,
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                error = painterResource(id = R.drawable.ic_anime_placeholder),
+                placeholder = painterResource(id = R.drawable.ic_anime_placeholder)
             )
             
             Box(

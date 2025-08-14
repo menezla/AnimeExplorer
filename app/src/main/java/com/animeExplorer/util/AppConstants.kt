@@ -80,4 +80,7 @@ object AppConstants {
     
     // Oops Messages
     const val OOPS_MESSAGE = "Oops!"
+    
+    // Legal Constraint Handling
+    const val SHOW_ANIME_IMAGES = true // Toggle this for legal compliance
 }

@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 data class AnimeDetailsState(
     val animeDetails: AnimeDetailsEntity? = null,
     val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
     val error: String? = null
 )
 
@@ -46,7 +47,8 @@ class AnimeDetailsViewModel(
     fun loadAnimeDetails(animeId: Int, forceRefresh: Boolean = false) {
         viewModelScope.launch(mainDispatcher) {
             _state.value = _state.value.copy(
-                isLoading = true,
+                isLoading = !forceRefresh,
+                isRefreshing = forceRefresh,
                 error = null
             )
             
@@ -55,12 +57,14 @@ class AnimeDetailsViewModel(
                     _state.value = _state.value.copy(
                         animeDetails = animeDetails,
                         isLoading = false,
+                        isRefreshing = false,
                         error = null
                     )
                 }
                 .onFailure { exception ->
                     _state.value = _state.value.copy(
                         isLoading = false,
+                        isRefreshing = false,
                         error = exception.message ?: "Failed to load anime details"
                     )
                 }

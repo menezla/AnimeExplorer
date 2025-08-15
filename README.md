@@ -82,7 +82,7 @@ https://github.com/user-attachments/assets/847417a5-e182-45fe-aaf4-2dd333d3fa77
 **Network Error Handling**:
 - Connection state monitoring
 - Retry mechanisms with exponential backoff
-- User-friendly error messages with retry options
+- Error messages with retry options
 
 **UI Error States**:
 - Loading, success, and error states managed in ViewModels

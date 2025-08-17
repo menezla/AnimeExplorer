@@ -1,6 +1,6 @@
 # Anime Explorer
 
-A modern Android app that fetches and displays anime information using the Jikan API, built with Jetpack Compose and following MVVM architecture with Koin dependency injection.
+A modern Android app that fetches and displays anime information, built with Jetpack Compose and following MVVM with Clean architecture & Koin dependency injection.
 
 ## 📹 Demo
 https://github.com/user-attachments/assets/847417a5-e182-45fe-aaf4-2dd333d3fa77
